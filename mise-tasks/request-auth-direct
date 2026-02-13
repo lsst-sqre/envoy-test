@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#MISE description="Make a request directly to the auth server"
+set -euxo pipefail
+
+IP=$(kubectl get gateway -o 'jsonpath={.items[0].status.addresses[0].value}')
+curl -v --resolve "www.example.com:80:$IP" www.example.com/auth

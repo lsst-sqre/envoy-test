@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#MISE description="Stop all daemons and destroy the KinD cluster"
+set -euxo pipefail
+
+pitchfork stop --all
+kind delete cluster
