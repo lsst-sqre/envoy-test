@@ -1,0 +1,10 @@
+[tools]
+go = "latest"  # Just to compile cloud-provider-kind
+"go:sigs.k8s.io/cloud-provider-kind" = "latest"
+helm = "latest"
+kind = "latest"
+kubectl = "latest"
+pitchfork = "latest"
+
+[env]
+KUBECONFIG = "./.config/.kube/kube.yaml"
