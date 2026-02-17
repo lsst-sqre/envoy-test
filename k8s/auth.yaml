@@ -1,12 +1,5 @@
 # Adapted from:
 # https://gateway.envoyproxy.io/docs/tasks/security/ext-auth/#http-external-authorization-service
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: http-ext-auth
-data:
-  http-ext-auth.js: |
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
