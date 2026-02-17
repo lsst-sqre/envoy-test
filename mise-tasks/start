@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#MISE description="Start the LoadBalancer provider, create the KinD cluster, and install everything into the cluster."
+set -euxo pipefail
+
+pitchfork start --all
+
+kind create cluster --config kind.yaml
+kubectl label node kind-control-plane node.kubernetes.io/exclude-from-external-load-balancers-
+
+# Install the envoy gateway
+helm install eg oci://docker.io/envoyproxy/gateway-helm --version v1.7.0 -n envoy-gateway-system --create-namespace
+kubectl wait --timeout=5m -n envoy-gateway-system deployment/envoy-gateway --for=condition=Available
+
+# Install the test app
+kubectl apply -f k8s/backend.yaml -n default
+
+# Install the test external auth app
+kubectl apply -f k8s/auth.yaml -n default

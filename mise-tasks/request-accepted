@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#MISE description="Make a request to the app that will be accepted"
+set -euxo pipefail
+
+IP=$(kubectl get gateway -o 'jsonpath={.items[0].status.addresses[0].value}')
+curl -v --resolve "www.example.com:80:$IP" www.example.com/myapp -H "Authorization: Bearer token2"

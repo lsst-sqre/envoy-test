@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#MISE description="Apply all kubernetes resources and restart all app deployments"
+set -euxo pipefail
+
+kubectl apply -f k8s/backend.yaml -n default
+kubectl apply -f k8s/auth.yaml -n default
+
+kubectl rollout restart deployment/backend -n default
+kubectl wait --for=condition=available --timeout=30s deployment/backend -n default
+
+kubectl rollout restart deployment/http-ext-auth -n default
+kubectl wait --for=condition=available --timeout=30s deployment/http-ext-auth -n default
